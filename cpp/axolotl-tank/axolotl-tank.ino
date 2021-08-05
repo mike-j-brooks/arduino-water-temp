@@ -1,4 +1,4 @@
-  //Libraries
+//Libraries
 
 #include <LiquidCrystal.h>  // LCD 1602
 #include <SimpleDHT.h>      // DHT11 temp/humidity sensor
