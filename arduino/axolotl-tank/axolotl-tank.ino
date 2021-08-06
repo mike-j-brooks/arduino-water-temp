@@ -9,24 +9,24 @@ const int water_sensor_pin = 2;
 
 OneWire oneWire(water_sensor_pin);
 
-DallasTemperature sensor(&oneWire);
+DallasTemperature waterSensor(&oneWire);
 
 void setup() {
   // start serial port
   Serial.begin(9600);
 
   // start library
-  sensor.begin();
+  waterSensor.begin();
 
 }
 
 void loop() {
 
-  sensor.requestTemperatures();
+  waterSensor.requestTemperatures();
   delay(1000);
   
-  celcius = sensor.getTempCByIndex(0);
-  fahrenheit = sensor.toFahrenheit(celcius);
+  celcius = waterSensor.getTempCByIndex(0);
+  fahrenheit = waterSensor.toFahrenheit(celcius);
 
   Serial.print("Current temperature : ");
   Serial.print(fahrenheit);
