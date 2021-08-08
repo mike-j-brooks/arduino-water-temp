@@ -25,11 +25,20 @@ void loop() {
   waterSensor.requestTemperatures();
   delay(1000);
   
-  celcius = waterSensor.getTempCByIndex(0);
-  fahrenheit = waterSensor.toFahrenheit(celcius);
+  float celcius = waterSensor.getTempCByIndex(0);
+  float fahrenheit = waterSensor.toFahrenheit(celcius);
 
   Serial.print("Current temperature : ");
   Serial.print(fahrenheit);
   Serial.println(" F ");
+
+  if(fahrenheit < 40){
+    Serial.println("Your axolotl is freezing to death!");
+  }
+
+  if(fahrenheit > 60) {
+    Serial.println("Your axolotl is boiling alive!");
+  }
+  
   delay(1000);
 }
