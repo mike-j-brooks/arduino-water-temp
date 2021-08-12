@@ -5,7 +5,24 @@
 #include <OneWire.h>        // DS18B20 Water Temperature Sensor
 #include <DallasTemperature.h>  // DS18B20 Water Temperature Sensor
 
-const int water_sensor_pin = 2;
+const int max_temp = 67;
+const int min_temp = 59;
+
+const int water_sensor_pin = 13;
+
+const int lcd_pin_RS = 7;
+const int lcd_pin_E = 8;
+const int lcd_pin_D4 = 9;
+const int lcd_pin_D5 = 10;
+const int lcd_pin_D6 = 11;
+const int lcd_pin_D7 = 12;
+
+LiquidCrystal lcd(lcd_pin_RS,
+                  lcd_pin_E,
+                  lcd_pin_D4,
+                  lcd_pin_D5,
+                  lcd_pin_D6,
+                  lcd_pin_D7);
 
 OneWire oneWire(water_sensor_pin);
 
@@ -17,6 +34,9 @@ void setup() {
 
   // start library
   waterSensor.begin();
+
+  // start lcd 
+  lcd.begin(16,2); // (columns,rows)
 
 }
 
@@ -32,13 +52,31 @@ void loop() {
   Serial.print(fahrenheit);
   Serial.println(" F ");
 
-  if(fahrenheit < 40){
+  // LCD Print : 
+  lcd.setCursor(0,0);
+  lcd.print(String(fahrenheit) + " F");
+
+  // Temperature Range :
+  if(fahrenheit < min_temp){
     Serial.println("Your axolotl is freezing to death!");
+    lcd.setCursor(0,1);
+    lcd.print("TOO COLD!       ");   // whitespace overrides previously displayed characters
   }
 
-  if(fahrenheit > 60) {
-    Serial.println("Your axolotl is boiling alive!");
+  if(fahrenheit >= min_temp & fahrenheit <= max_temp ){
+    Serial.println("Ideal temperature");
+    lcd.setCursor(0,1);
+    lcd.print("JUST RIGHT! YAY!");
   }
+  
+  if(fahrenheit > max_temp) {
+    Serial.println("Your axolotl is boiling alive!");
+    lcd.setCursor(0,1);
+    lcd.print("TOO HOT!        ");
+
+  }
+
+
   
   delay(1000);
 }
