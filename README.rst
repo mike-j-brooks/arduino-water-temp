@@ -1,20 +1,12 @@
-=============
-Axolotl IoT
-=============
-=============
+=================================
+Arduino Water Temperature Display
+=================================
+=================================
 
 
-Home for IoT project: Arduino sensors for Axolotl tank, cloud data management, and Android app.
 
-Purpose:
---------
+Simple Arduino code to inform user if the axolotl's water temperature has gone out of the safe range.
 
-To provide data and alerts to a smartphone app to inform user if the axolotl water temperature has gone out of the safe range.
+Displays current temperature, as well as "too hot", "too cold", or "just right".
 
-
-Stack:
-------
-
-1. Arduino Uno board, C++
-2. Heroku with Python/HTML/CSS/JS for cloud management
-3. Android app in Java
+All hardware requirements are described in /docs/hardware.rst.
