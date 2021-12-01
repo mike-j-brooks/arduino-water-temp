@@ -1,15 +1,15 @@
 // Libraries
-
-#include <LiquidCrystal.h>  // LCD 1602
-#include <SimpleDHT.h>      // DHT11 temp/humidity sensor
-#include <OneWire.h>        // DS18B20 Water Temperature Sensor
+#include <LiquidCrystal.h>      // LCD 1602
+#include <SimpleDHT.h>          // DHT11 temp/humidity sensor
+#include <OneWire.h>            // DS18B20 Water Temperature Sensor
 #include <DallasTemperature.h>  // DS18B20 Water Temperature Sensor
 
+// safe temperature range in Fahrenheit 
 const int max_temp = 67;
 const int min_temp = 59;
 
+// GPIO Pin attachments
 const int water_sensor_pin = 13;
-
 const int lcd_pin_RS = 7;
 const int lcd_pin_E = 8;
 const int lcd_pin_D4 = 9;
@@ -17,6 +17,7 @@ const int lcd_pin_D5 = 10;
 const int lcd_pin_D6 = 11;
 const int lcd_pin_D7 = 12;
 
+// Hardware connections
 LiquidCrystal lcd(lcd_pin_RS,
                   lcd_pin_E,
                   lcd_pin_D4,
@@ -28,6 +29,7 @@ OneWire oneWire(water_sensor_pin);
 
 DallasTemperature waterSensor(&oneWire);
 
+
 void setup() {
   // start serial port
   Serial.begin(9600);
@@ -37,7 +39,6 @@ void setup() {
 
   // start lcd 
   lcd.begin(16,2); // (columns,rows)
-
 }
 
 void loop() {
@@ -66,7 +67,7 @@ void loop() {
   if(fahrenheit >= min_temp & fahrenheit <= max_temp ){
     Serial.println("Ideal temperature");
     lcd.setCursor(0,1);
-    lcd.print("JUST RIGHT! YAY!");
+    lcd.print("JUST RIGHT!     ");
   }
   
   if(fahrenheit > max_temp) {
@@ -76,7 +77,5 @@ void loop() {
 
   }
 
-
-  
   delay(1000);
 }
