@@ -4,7 +4,8 @@
 #include <OneWire.h>            // DS18B20 Water Temperature Sensor
 #include <DallasTemperature.h>  // DS18B20 Water Temperature Sensor
 
-// safe temperature range in Fahrenheit 
+
+// Safe temperature range in Fahrenheit 
 const int max_temp = 67;
 const int min_temp = 59;
 
@@ -29,6 +30,15 @@ OneWire oneWire(water_sensor_pin);
 
 DallasTemperature waterSensor(&oneWire);
 
+String calculateTempOutOfRange(float temperature){
+  float tempDiff = 0;
+  if(temperature > max_temp){
+     tempDiff = temperature - max_temp;
+  }else if(temperature < min_temp){
+     tempDiff = temperature - min_temp;
+  }
+  return String(tempDiff);
+}
 
 void setup() {
   // start serial port
@@ -61,7 +71,7 @@ void loop() {
   if(fahrenheit < min_temp){
     Serial.println("Your axolotl is freezing to death!");
     lcd.setCursor(0,1);
-    lcd.print("TOO COLD!       ");   // whitespace overrides previously displayed characters
+    lcd.print("TOO COLD!  -" + calculateTempOutOfRange(fahrenheit));   // whitespace overrides previously displayed characters
   }
 
   if(fahrenheit >= min_temp & fahrenheit <= max_temp ){
@@ -73,7 +83,7 @@ void loop() {
   if(fahrenheit > max_temp) {
     Serial.println("Your axolotl is boiling alive!");
     lcd.setCursor(0,1);
-    lcd.print("TOO HOT!        ");
+    lcd.print("TOO HOT!   +"+ calculateTempOutOfRange(fahrenheit));
 
   }
 
