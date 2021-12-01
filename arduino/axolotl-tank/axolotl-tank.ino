@@ -52,10 +52,11 @@ void setup() {
 }
 
 void loop() {
-
+  
   waterSensor.requestTemperatures();
   delay(1000);
-  
+
+  // Convert to Fahrenheit
   float celcius = waterSensor.getTempCByIndex(0);
   float fahrenheit = waterSensor.toFahrenheit(celcius);
 
@@ -63,15 +64,15 @@ void loop() {
   Serial.print(fahrenheit);
   Serial.println(" F ");
 
-  // LCD Print : 
+  // LCD Line 1 : 
   lcd.setCursor(0,0);
   lcd.print(String(fahrenheit) + " F");
 
-  // Temperature Range :
+  // Temperature Range LCD Line 2 :
   if(fahrenheit < min_temp){
     Serial.println("Your axolotl is freezing to death!");
     lcd.setCursor(0,1);
-    lcd.print("TOO COLD!  -" + calculateTempOutOfRange(fahrenheit));   // whitespace overrides previously displayed characters
+    lcd.print("TOO COLD!  -" + calculateTempOutOfRange(fahrenheit));   
   }
 
   if(fahrenheit >= min_temp & fahrenheit <= max_temp ){
@@ -83,7 +84,7 @@ void loop() {
   if(fahrenheit > max_temp) {
     Serial.println("Your axolotl is boiling alive!");
     lcd.setCursor(0,1);
-    lcd.print("TOO HOT!   +"+ calculateTempOutOfRange(fahrenheit));
+    lcd.print("TOO HOT!   +" + calculateTempOutOfRange(fahrenheit));
 
   }
 
