@@ -63,9 +63,9 @@ void loop() {
   float celcius = waterSensor.getTempCByIndex(0);
   float fahrenheit = waterSensor.toFahrenheit(celcius);
 
-//  Serial.print("Current temperature : ");
-//  Serial.print(fahrenheit);
-//  Serial.println(" F ");
+  Serial.print("Water sensor temperature : ");
+  Serial.print(fahrenheit);
+  Serial.println(" F ");
 
   // LCD Line 1 : 
   lcd.setCursor(0,0);
