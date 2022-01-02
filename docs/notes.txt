@@ -45,6 +45,12 @@ I've set mine to STA mode with AT+CWMODE=1
 
   flashed the ESP8266 with an empty arduino sketch
 
+  PROBLEM : That only worked once, and I can't replicate the flash. Can't enter boot mode. Not sure how to proceed.
+
+  Added buttons to ESP-01 for RESET and GPIO-1 to GROOUND. Followed procedure of hold gpio1 button, press/release reset, release gpio1, doesn't work.
+
+  May need to buy new hardware that is easier to use!
+
 ### NEXT STEP:
 
   load up ESP8266WiFi.h and set up ESP01 as webserver
