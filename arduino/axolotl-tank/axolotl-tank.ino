@@ -1,6 +1,3 @@
-//#include <dht.h>
-
-
 // Libraries
 #include <LiquidCrystal.h>      // LCD 1602
 #include <DHT.h>                // DHT11 temp/humidity sensor
@@ -34,8 +31,7 @@ OneWire oneWire(water_sensor_pin);
 
 DallasTemperature waterSensor(&oneWire);
 
-DHT airSensor(air_sensor_pin, DHT11); //DHT.h library version
-//dht airSensor; //dht.h version
+DHT airSensor(air_sensor_pin, DHT11);
 
 String calculateTempOutOfRange(float temperature){
   float tempDiff = 0;
@@ -97,14 +93,11 @@ void loop() {
   }
 
   delay(1000);
-//  int chk = airSensor.read11(air_sensor_pin);
   float airTemp = airSensor.readTemperature(true); //true = fahrenheit
-//  float airTemp = airSensor.temperature;
   delay(2000); // sensor read takes ~ 250 ms 
   Serial.println(airTemp);
   Serial.println("air temp: " + String(airTemp));
   float airHumidity = airSensor.readHumidity();
-//  float airHumidity = airSensor.humidity;
   delay(2000);
   lcd.setCursor(0,0);
   lcd.print("air: ");
@@ -114,5 +107,5 @@ void loop() {
   lcd.print(String(airHumidity) + "     ");
 
 
-  delay(1000);
+  delay(2000);
 }
