@@ -1,7 +1,9 @@
+//#include <dht.h>
+
 
 // Libraries
 #include <LiquidCrystal.h>      // LCD 1602
-#include <SimpleDHT.h>          // DHT11 temp/humidity sensor
+#include <DHT.h>                // DHT11 temp/humidity sensor
 #include <OneWire.h>            // DS18B20 Water Temperature Sensor
 #include <DallasTemperature.h>  // DS18B20 Water Temperature Sensor
 
@@ -11,6 +13,7 @@ const int max_temp = 67;
 const int min_temp = 59;
 
 // GPIO Pin attachments
+const int air_sensor_pin = 4;
 const int water_sensor_pin = 13;
 const int lcd_pin_RS = 7;
 const int lcd_pin_E = 8;
@@ -31,6 +34,9 @@ OneWire oneWire(water_sensor_pin);
 
 DallasTemperature waterSensor(&oneWire);
 
+DHT airSensor(air_sensor_pin, DHT11); //DHT.h library version
+//dht airSensor; //dht.h version
+
 String calculateTempOutOfRange(float temperature){
   float tempDiff = 0;
   if(temperature > max_temp){
@@ -47,15 +53,14 @@ void setup() {
 
   // start library
   waterSensor.begin();
+  airSensor.begin(); // for DHT.h version
 
   // start lcd 
   lcd.begin(16,2); // (columns,rows)
 }
 
 void loop() {
-//  Test serial communication to ESP01 
 
-  
   waterSensor.requestTemperatures();
   delay(1000);
 
@@ -69,7 +74,7 @@ void loop() {
 
   // LCD Line 1 : 
   lcd.setCursor(0,0);
-  lcd.print(String(fahrenheit) + " F");
+  lcd.print(String(fahrenheit) + " F    ");
 
   // Temperature Range LCD Line 2 :
   if(fahrenheit < min_temp){
@@ -90,6 +95,24 @@ void loop() {
     lcd.print("TOO HOT!   +" + calculateTempOutOfRange(fahrenheit));
 
   }
+
+  delay(1000);
+//  int chk = airSensor.read11(air_sensor_pin);
+  float airTemp = airSensor.readTemperature(true); //true = fahrenheit
+//  float airTemp = airSensor.temperature;
+  delay(2000); // sensor read takes ~ 250 ms 
+  Serial.println(airTemp);
+  Serial.println("air temp: " + String(airTemp));
+  float airHumidity = airSensor.readHumidity();
+//  float airHumidity = airSensor.humidity;
+  delay(2000);
+  lcd.setCursor(0,0);
+  lcd.print("air: ");
+  lcd.print(String(airTemp) + "   ");
+  lcd.setCursor(0,1);
+  lcd.print("humid: ");
+  lcd.print(String(airHumidity) + "     ");
+
 
   delay(1000);
 }
