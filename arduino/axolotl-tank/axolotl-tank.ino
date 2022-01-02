@@ -104,7 +104,7 @@ void loop() {
   lcd.print(String(airTemp) + "   ");
   lcd.setCursor(0,1);
   lcd.print("humid: ");
-  lcd.print(String(airHumidity) + "     ");
+  lcd.print(String(airHumidity) + "%    ");
 
 
   delay(2000);
