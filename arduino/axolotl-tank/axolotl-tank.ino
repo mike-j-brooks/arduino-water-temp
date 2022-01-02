@@ -1,3 +1,4 @@
+
 // Libraries
 #include <LiquidCrystal.h>      // LCD 1602
 #include <SimpleDHT.h>          // DHT11 temp/humidity sensor
@@ -42,7 +43,7 @@ String calculateTempOutOfRange(float temperature){
 
 void setup() {
   // start serial port
-  Serial.begin(9600);
+  Serial.begin(9600); 
 
   // start library
   waterSensor.begin();
@@ -52,6 +53,8 @@ void setup() {
 }
 
 void loop() {
+//  Test serial communication to ESP01 
+
   
   waterSensor.requestTemperatures();
   delay(1000);
@@ -60,9 +63,9 @@ void loop() {
   float celcius = waterSensor.getTempCByIndex(0);
   float fahrenheit = waterSensor.toFahrenheit(celcius);
 
-  Serial.print("Current temperature : ");
-  Serial.print(fahrenheit);
-  Serial.println(" F ");
+//  Serial.print("Current temperature : ");
+//  Serial.print(fahrenheit);
+//  Serial.println(" F ");
 
   // LCD Line 1 : 
   lcd.setCursor(0,0);
@@ -70,19 +73,19 @@ void loop() {
 
   // Temperature Range LCD Line 2 :
   if(fahrenheit < min_temp){
-    Serial.println("Your axolotl is freezing to death!");
+//    Serial.println("Your axolotl is freezing to death!");
     lcd.setCursor(0,1);
     lcd.print("TOO COLD!  -" + calculateTempOutOfRange(fahrenheit));   
   }
 
   if(fahrenheit >= min_temp & fahrenheit <= max_temp ){
-    Serial.println("Ideal temperature");
+//    Serial.println("Ideal temperature");
     lcd.setCursor(0,1);
     lcd.print("JUST RIGHT!     ");
   }
   
   if(fahrenheit > max_temp) {
-    Serial.println("Your axolotl is boiling alive!");
+//    Serial.println("Your axolotl is boiling alive!");
     lcd.setCursor(0,1);
     lcd.print("TOO HOT!   +" + calculateTempOutOfRange(fahrenheit));
 

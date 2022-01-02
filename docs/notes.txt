@@ -1,0 +1,50 @@
+General Notes
+
+### ESP8266 Wifi Module ###
+
+I'm using the ESP-01 module, the original.
+
+When connected to Arduino IDE Serial Monitor:
+
+  1 -- baud rate must be set to 115200
+  2 -- Also select "Both NL & CR"
+
+Test connection by sending "AT", response should be "OK"
+
+Commands sent to ESP-01 are case-sensitive, must be all caps.
+
+Commands :
+
+  AT+CWMODE?    returns 1,2, or 3
+  AT+CWMODE=2   sets mode to Access Point
+  AT+CIFSR      checks for IP
+  AT+CWJAP= “Wi-FiNetwork”,“Password”     connects to WiFi
+  AT+CIPMUX=1   enable multiple connections
+  AT+CIPSERVER=1,80   start server at port 80
+
+CW Modes :
+
+STA = 1   (Station)
+AP = 2    (Access Point)
+Both = 3
+
+I've set mine to STA mode with AT+CWMODE=1
+
+** Copying commands into the serial monitor doesn't work, you need to type it.
+
+## Current Firmware Version :
+
+  AT+GMR
+
+  AT version:1.1.0.0(May 11 2016 18:09:56)
+  SDK version:1.5.4(baaeaebb)
+  compile time:May 20 2016 15:08:19
+  OK
+
+### LAST THING I DID :
+
+  flashed the ESP8266 with an empty arduino sketch
+
+### NEXT STEP:
+
+  load up ESP8266WiFi.h and set up ESP01 as webserver
